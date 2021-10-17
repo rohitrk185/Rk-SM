@@ -1,5 +1,8 @@
 module.exports.home = (req, res) => {
-    return res.end('<h1>Express is up for Rk-SM</h1>');
+    return res.render('home', {
+        title: 'SM-Home'
+    });
+    // return res.end('<h1>Express is up for Rk-SM</h1>');
 };
 
 // module.exports.profile = (req, res) => {
