@@ -5,6 +5,9 @@ const app = express();
 
 //use libray for layouts
 const expressLayouts = require('express-ejs-layouts');
+
+//use static files
+app.use(express.static('./assets'));
 app.use(expressLayouts);
 
 
