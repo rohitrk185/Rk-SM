@@ -1,10 +1,10 @@
 const port = 8000;
 
-          // requirements  //        
+        // requirements  //        
 const express = require('express');
-    //use libray for layouts
+//use library for layouts
 const expressLayouts = require('express-ejs-layouts');
-    // use mango for db
+// use mongo for db
 const db = require('./config/mongoose'); 
 
 
