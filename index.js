@@ -21,7 +21,7 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 //Use urlEncoded
-app.use('urlencoded()');
+app.use(express.urlencoded());
 //use cookieParser
 app.use(cookieParser());
 
