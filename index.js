@@ -6,9 +6,10 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 // use mongo for db
 const db = require('./config/mongoose'); 
+//cookie-parser
+const cookieParser = require('cookie-parser');
 
-
-// fire up express
+// fire up expressn 
 const app = express();
 
 //use static files
@@ -19,6 +20,10 @@ app.use(expressLayouts);
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
+//Use urlEncoded
+app.use('urlencoded()');
+//use cookieParser
+app.use(cookieParser());
 
 //use express router
 app.use('/', require('./routes/index'));
