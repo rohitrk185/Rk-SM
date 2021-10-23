@@ -1,11 +1,15 @@
-const express = require('express');
 const port = 8000;
-const app = express();
 
-
-//use libray for layouts
+          // requirements  //        
+const express = require('express');
+    //use libray for layouts
 const expressLayouts = require('express-ejs-layouts');
+    // use mango for db
 const db = require('./config/mongoose'); 
+
+
+// fire up express
+const app = express();
 
 //use static files
 app.use(express.static('./assets'));
@@ -18,9 +22,11 @@ app.set('layout extractScripts', true);
 
 //use express router
 app.use('/', require('./routes/index'));
+
 //setting up views of the app
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
 
 app.listen(port, (err) => {
     if(err) {
