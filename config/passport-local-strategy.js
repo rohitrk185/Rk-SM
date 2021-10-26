@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-const LocalStrategy = require('passprt-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/user');
 
@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
     (email, password, done) => {
         //find a user and establish identity
         User.findOne({email: email}, (err, user) => {
-            if(err) { console.log('Error in finding user(passport Js)') return done(err)};
+            if(err) { console.log('Error in finding user(passport Js)'); return done(err)};
             if(!user || user.password != password) {
                 console.log('Invalid Password');
                 return done(null, /*authentication done is false*/false);
@@ -34,5 +34,27 @@ passport.deserializeUser((id, done) => {
         return done(null, user);
     });
 });
+
+
+//check if user is authenticated
+passport.checkAuthentication = (req, res, next) => {
+    // if user signed in
+    if(req.isAuthenticated()) {
+        return next();
+    }
+
+    // if not signed in
+    return res.redirect('/users/sign-in');
+};
+
+passport.setAuthenticatedUser = (req, res, next) => {
+    if(req.isAuthenticated()) {
+        //req.user containes the current signed-in user from the session
+        // cookie and send this to req.locals
+        res.locals.user = req.user;
+    }
+    next();
+};
+
 
 module.exports = passport;
