@@ -1,6 +1,11 @@
-module.exports.posts = (req, res) => {
-    // res.end('<h1>Welcome to my posts section</h1>');
-    return res.render('posts', {
-        title: 'Posts Section'
+const Post = require('../models/post');
+
+module.exports.create = (req, res) => {
+    Post.create({
+        content: req.body.content,
+        user: req.user._id
+    }, (err, post) => {
+        if(err) { console.log("Error: ", err); return; }
+        return res.redirect('back');
     });
 };
