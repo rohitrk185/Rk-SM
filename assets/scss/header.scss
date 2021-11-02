@@ -1,0 +1,36 @@
+header, footer{
+    box-sizing: border-box !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(49, 22, 75);
+    padding: 0px 10px;
+    h2{
+        font-size: 1.6em;
+    }
+    * {
+        color: rgb(235, 215, 255);
+    }
+    ul{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+    }
+    ul li{
+        list-style-type: none;
+        padding: 0 4px;
+    }
+    a{
+        text-decoration: none;
+    }
+    ul li a{
+        border-left: 1px solid rgb(235, 215, 255);
+        padding: 0 2px;
+    }
+    ul li a:hover{
+        color: #fff;
+        text-decoration: underline;
+        border-left: 1px solid #fff;
+    }
+}

@@ -1,6 +1,7 @@
 const port = 8000;
 
-        // requirements  //        
+        // requirements  //
+const path = require('path');        
 const express = require('express');
 //cookie-parser
 const cookieParser = require('cookie-parser');
@@ -16,6 +17,17 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo');//(session);
+const sassMiddleware = require('node-sass-middleware');
+
+
+app.use(sassMiddleware({
+    src: path.join(__dirname, 'assets', 'scss'),
+    dest: path.join(__dirname, 'assets'),
+    debug: true,
+    outputStyle: 'extended',
+    // prefix: '/css'
+}));
+
 
 //Use urlEncoded
 app.use(express.urlencoded());
