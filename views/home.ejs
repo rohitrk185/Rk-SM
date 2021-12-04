@@ -8,4 +8,19 @@
         <textarea name="content" cols="30" rows="3" placeholder="Type Here..."></textarea>
         <input type="submit" value="Post">
     </form>
+
+    <div id="posts-list-container">
+        <ul>
+            <% for(post of posts){ %>
+                <li style="text-align: left;">
+                    <p> 
+                        <%= post.content %>
+                        <br>
+                        <small style="font-size: 0.7em; color:rgb(20, 20, 20)"> Posted By <%= post.user.name%> </small> 
+                    </p> 
+                </li>
+            <% } %>
+        </ul>
+
+    </div>
 </section>

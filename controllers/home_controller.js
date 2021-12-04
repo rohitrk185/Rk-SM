@@ -1,10 +1,28 @@
+const Post = require('../models/post');
+
 module.exports.home = (req, res) => {
-    res.cookie('user_id', 25);
-    console.log(req.cookies);
-    return res.render('home', {
-        title: 'SM-Home'
+    // res.cookie('user_id', 25);
+    // console.log(req.cookies);
+    // Post.find({}, (err, posts) => {
+    //     console.log(posts);
+    //     return res.render('home', {
+    //         title: 'SM-Home',
+    //         posts: posts
+    //     });
+    // });
+
+    //populate user using reference
+    Post.find({}).populate('user').exec(function(err, posts) {
+        if(err) {
+            console.log(err);
+            return;
+        }
+        console.log(posts);
+        return res.render('home', {
+            title: 'SM-Home',
+            posts: posts
+        });
     });
-    // return res.end('<h1>Express is up for Rk-SM</h1>');
 };
 
 // module.exports.profile = (req, res) => {
