@@ -17,7 +17,7 @@ module.exports.home = (req, res) => {
             console.log(err);
             return;
         }
-        console.log(posts);
+        // console.log(posts);
         return res.render('home', {
             title: 'SM-Home',
             posts: posts
