@@ -2,4 +2,5 @@ footer {
   background-color: #48236b;
   position: fixed;
   bottom: 0;
-  width: 100%; }
+  width: 100%;
+  margin-top: 80vh; }

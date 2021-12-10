@@ -4,7 +4,8 @@ header, footer {
   justify-content: space-between;
   align-items: center;
   background-color: #31164b;
-  padding: 0px 10px; }
+  padding: 0px 8px;
+  font-size: 0.9em; }
   header h2, footer h2 {
     font-size: 1.6em; }
   header *, footer * {
