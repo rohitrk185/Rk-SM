@@ -11,7 +11,7 @@ router.get('/', homeController.home);
 // router.get('/posts', homeController.posts);
 router.use('/posts', require('./posts'));
 router.use('/users', require('./users'));
-
+router.use('/comments', require('./comments'));
 
 
 module.exports = router;
