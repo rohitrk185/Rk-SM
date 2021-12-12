@@ -8,7 +8,8 @@ module.exports.create = (req, res) => {
             Comment.create({
                 content: req.body.content,
                 post: req.body.post,
-                user: req.user._id
+                user: req.user._id,
+                postOwnedUser: post.user
             }, (err, comment) => {
                 if(err) {console.log(err); return;}
 
@@ -22,3 +23,27 @@ module.exports.create = (req, res) => {
         }
     });
 };
+
+module.exports.delete = (req,res) => {
+    
+    Comment.findById(req.params.id, (err, comment) => {
+        if(err) {console.log(err); return;}
+
+        if( (req.user.id == comment.user) || (req.user.id == comment.postOwnedUser) ) {
+            console.log(`Comment {${comment.content}} --was deleted`);
+
+            let postId = comment.post;
+
+            comment.remove();
+            
+            Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}}, (err, post)=> {
+                if(err) console.log(err);
+                console.log(post);      
+            });
+        }
+        
+        return res.redirect('back');
+    });
+
+};
+
