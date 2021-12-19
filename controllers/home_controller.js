@@ -1,7 +1,30 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 
-module.exports.home = (req, res) => {
+module.exports.home = async function(req, res) {
+
+    try{
+        //populate user using reference
+        let posts = await Post.find({})
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        });
+
+        let users = await User.find({});
+
+        return res.render('home', {
+            title: 'SM-Home',
+            posts: posts,
+            allUsers: users
+        });
+    } catch(err) {
+        console.log('Error: ', err);
+    }
+    
     // res.cookie('user_id', 25);
     // console.log(req.cookies);
     // Post.find({}, (err, posts) => {
@@ -11,36 +34,8 @@ module.exports.home = (req, res) => {
     //         posts: posts
     //     });
     // });
-
-    //populate user using reference
-    Post.find({})
-    .populate('user')
-    .populate({
-        path: 'comments',
-        populate: {
-            path: 'user'
-        }
-    })
-    .exec(function(err, posts) {
-        if(err) {
-            console.log(err);
-            return;
-        }
-        User.find({}, (err, users)=> {
-        // console.log(posts);
-            return res.render('home', {
-                title: 'SM-Home',
-                posts: posts,
-                all_users: users
-            });
-        });
-    });
 };
 
-// module.exports.profile = (req, res) => {
-//     return res.end('<h1>Welcome to My Profile</h1>');
-// };
+let posts = Post.find({}).populate('comments').exec();
 
-// module.exports.posts = (req, res) => {
-//     return res.end('<h1>Welcome to my posts section.</h1>');
-// }; 
+posts.then();
