@@ -12,10 +12,10 @@ module.exports.create = async function(req, res) {
                 user: req.user._id,
                 postOwnedUser: post.user
             });
-            console.log(comment);
             
             post.comments.push(comment);
             post.save();
+            req.flash('success', 'Commented was Added!');
 
             res.redirect('/');
         }        
@@ -32,11 +32,10 @@ module.exports.delete = async function(req,res) {
 
             let postId = comment.post;
             comment.remove();
-            console.log(`Comment {${comment.content}} --was deleted`);
+            req.flash('success', 'Comment was Deleted!');
 
             let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
             
-            console.log(post);      
         }
         return res.redirect('back');
     } catch(err) {

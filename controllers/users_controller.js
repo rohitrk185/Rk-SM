@@ -48,19 +48,21 @@ module.exports.create = (req, res) => {
     }
     User.findOne({email: req.body.email}, (err, user) => {
         if(err) {
-            console.log('error in finding user in signing-up');
+            console.log('error in finding user while signing-up');
             return; 
         }
         if(!user) {
             User.create(req.body, (err, user) => {
                 if(err) {
-                    console.log('error in creating user while signing-up');
-                    return; 
+                    req.flash('error', 'Error in Creating User!');
+                    return;
                 }
+                req.flash('success', "New Account was Successfully Created!");
                 console.log(user);       
                 return res.redirect('/users/sign-in');
             });
         }else {
+            req.flash('error', 'User Already Exists!');
             return res.redirect('back');
         }
     })

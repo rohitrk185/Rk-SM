@@ -16,6 +16,7 @@ module.exports.home = async function(req, res) {
 
         let users = await User.find({});
 
+        req.flash('sucess', "Welcome:)");
         return res.render('home', {
             title: 'SM-Home',
             posts: posts,
@@ -36,6 +37,6 @@ module.exports.home = async function(req, res) {
     // });
 };
 
-let posts = Post.find({}).populate('comments').exec();
+// let posts = Post.find({}).populate('comments').exec();
 
-posts.then();
+// posts.then();

@@ -8,10 +8,11 @@ module.exports.create = async function(req, res) {
             content: req.body.content,
             user: req.user._id
         });
+        req.flash('success', 'Posted Successfully');
+        return res.redirect('back');
     } catch(err) {
         console.log("Error: ", err); return;
     }
-    return res.redirect('back');
 };
 
 module.exports.delete = async function(req, res) {
@@ -22,8 +23,11 @@ module.exports.delete = async function(req, res) {
             console.log(`${post} --was deleted`);
 
             await Comment.deleteMany({post: req.params.id});
-            return res.redirect('back');
+            req.flash('success', 'Post Deleted!');
+        }else {
+            req.flash('error', 'Cannot Delete Post!');
         }
+        return res.redirect('back');
     } catch(err) {
         console.log(err);
         return;
