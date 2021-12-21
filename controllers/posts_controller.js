@@ -4,11 +4,33 @@ const Comment = require('../models/comment');
 
 module.exports.create = async function(req, res) {
     try {
-        await Post.create({
+        let post = await Post.create({
             content: req.body.content,
             user: req.user._id
         });
-        req.flash('success', 'Posted Successfully');
+
+        post = await Post.find({_id: post._id})
+        .populate('user', 'name');
+        console.log(post);
+
+        req.flash('success', 'Posted Successfully!');
+        if(req.xhr) {
+            // res.locals.flash = {
+            //     'success': req.flash('success'),
+            //     'error': req.flash('error'),
+            // };
+            return res.status(200).json({
+                data: {
+                    post: post
+                },
+                message: "Post Created",
+                flash: {
+                    'success': req.flash('success'),
+                    'error': req.flash('error')
+                }
+            });
+        }
+
         return res.redirect('back');
     } catch(err) {
         console.log("Error: ", err); return;
@@ -23,7 +45,21 @@ module.exports.delete = async function(req, res) {
             console.log(`${post} --was deleted`);
 
             await Comment.deleteMany({post: req.params.id});
+
             req.flash('success', 'Post Deleted!');
+
+            if(req.xhr) {
+                return res.status(200).json({
+                    data: {
+                        post_id: req.params.id
+                    },
+                    message: 'Post Deleted',
+                    flash: {
+                        'success': req.flash('success'),
+                        'error': req.flash('error')
+                    }
+                });
+            }
         }else {
             req.flash('error', 'Cannot Delete Post!');
         }

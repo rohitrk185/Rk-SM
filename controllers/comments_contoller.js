@@ -15,7 +15,7 @@ module.exports.create = async function(req, res) {
             
             post.comments.push(comment);
             post.save();
-            req.flash('success', 'Commented was Added!');
+            req.flash('success', 'Comment was Added!');
 
             res.redirect('/');
         }        

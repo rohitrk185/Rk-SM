@@ -25,7 +25,7 @@ const customMWare = require('./config/middleware');
 app.use(sassMiddleware({
     src: path.join(__dirname, 'assets/scss'),
     dest: path.join(__dirname, 'assets/css'),
-    debug: false,
+    debug: true,
     outputStyle: 'extended',
     prefix: '/css'
 }));

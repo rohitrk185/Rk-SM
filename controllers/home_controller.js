@@ -6,15 +6,25 @@ module.exports.home = async function(req, res) {
     try{
         //populate user using reference
         let posts = await Post.find({})
-        .populate('user')
+        .sort('-createdAt')
+        .populate('user', 'name')
         .populate({
             path: 'comments',
             populate: {
-                path: 'user'
+                path: 'user',
+                select: 'name'
             }
         });
 
-        let users = await User.find({});
+        // console.log(posts[0].comments[0]);
+
+        let users = await User.find({}, {
+            password: 0,
+            email: 0,
+            createdAt: 0,
+            updatedAt: 0,
+        });
+        console.log(users);
 
         req.flash('sucess', "Welcome:)");
         return res.render('home', {

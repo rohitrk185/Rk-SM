@@ -1,10 +1,10 @@
-<li style="text-align: left;">
+<li style="text-align: left;" id="post-<%= post._id %>">
     <p> 
       <%= post.content %>
 
       <% if(locals.user && (locals.user.id == post.user.id)) { %>
       <small>
-        <a href="/posts/delete/<%= post.id %>">Delete</a>
+        <a class="delete-post-btn" href="/posts/delete/<%= post.id %>">Delete</a>
       </small>
       <% } %>
       
