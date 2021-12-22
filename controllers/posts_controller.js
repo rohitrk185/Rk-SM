@@ -11,14 +11,9 @@ module.exports.create = async function(req, res) {
 
         post = await Post.find({_id: post._id})
         .populate('user', 'name');
-        console.log(post);
 
         req.flash('success', 'Posted Successfully!');
         if(req.xhr) {
-            // res.locals.flash = {
-            //     'success': req.flash('success'),
-            //     'error': req.flash('error'),
-            // };
             return res.status(200).json({
                 data: {
                     post: post

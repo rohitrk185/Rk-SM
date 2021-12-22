@@ -1,7 +1,6 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
-
 module.exports.create = async function(req, res) {
     try {
         let post = await Post.findById(req.body.post);
@@ -12,12 +11,31 @@ module.exports.create = async function(req, res) {
                 user: req.user._id,
                 postOwnedUser: post.user
             });
-            
             post.comments.push(comment);
             post.save();
+
+            comment = await Comment.find({_id: comment._id})
+            .populate('user', 'name'); 
+            
+            // console.log(comment);
+
             req.flash('success', 'Comment was Added!');
 
-            res.redirect('/');
+            if(req.xhr) {
+                return res.status(200).json({
+                    data: {
+                        comment: comment,
+                        postId: req.body.post
+                    },
+                    message: "Comment Added",
+                    flash: {
+                        'success': req.flash('success'),
+                        'error': req.flash('error')
+                    }
+                });
+            }
+
+            return res.redirect('back');
         }        
     } catch(err) {
         console.log(err); 
@@ -32,10 +50,23 @@ module.exports.delete = async function(req,res) {
 
             let postId = comment.post;
             comment.remove();
-            req.flash('success', 'Comment was Deleted!');
 
             let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
             
+            req.flash('success', 'Comment was Deleted!');
+
+            if(req.xhr) {
+                return res.status(200).json({
+                    data: {
+                        commentId: req.params.id
+                    },
+                    message: "Comment Removed",
+                    flash: {
+                        'success': req.flash('success'),
+                        'error': req.flash('error')
+                    }
+                });
+            }
         }
         return res.redirect('back');
     } catch(err) {

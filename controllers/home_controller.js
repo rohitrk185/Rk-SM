@@ -24,7 +24,6 @@ module.exports.home = async function(req, res) {
             createdAt: 0,
             updatedAt: 0,
         });
-        console.log(users);
 
         req.flash('sucess', "Welcome:)");
         return res.render('home', {
