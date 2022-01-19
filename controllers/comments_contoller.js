@@ -14,10 +14,24 @@ module.exports.create = async function(req, res) {
             post.comments.push(comment);
             post.save();
 
-            comment = await Comment.find({_id: comment._id})
-            .populate('user', 'name'); 
+            // let posts = await Post.find({})
+            // .sort('-createdAt')
+            // .populate('user', 'name')
+            // .populate({
+            //     path: 'comments',
+            //     populate: {
+            //         path: 'user',
+            //         select: 'name'
+            //     }
+            // });
+            // comment = await Comment.find({_id: comment._id})
+            // .sort()
+            // .populate({
+            //     path: 'user',
+            //     select: 'name'
+            // }); 
             
-            // console.log(comment);
+            // console.log(post);
 
             req.flash('success', 'Comment was Added!');
 
@@ -34,7 +48,6 @@ module.exports.create = async function(req, res) {
                     }
                 });
             }
-
             return res.redirect('back');
         }        
     } catch(err) {
