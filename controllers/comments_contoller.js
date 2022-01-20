@@ -1,6 +1,8 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
+const commentsMailer = require('../mailers/comments_mailer');
+
 module.exports.create = async function(req, res) {
     try {
         let post = await Post.findById(req.body.post);
@@ -14,25 +16,9 @@ module.exports.create = async function(req, res) {
             post.comments.push(comment);
             post.save();
 
-            // let posts = await Post.find({})
-            // .sort('-createdAt')
-            // .populate('user', 'name')
-            // .populate({
-            //     path: 'comments',
-            //     populate: {
-            //         path: 'user',
-            //         select: 'name'
-            //     }
-            // });
-            // comment = await Comment.find({_id: comment._id})
-            // .sort()
-            // .populate({
-            //     path: 'user',
-            //     select: 'name'
-            // }); 
+            comment = await comment.populate('user', 'name email'); 
+            // commentsMailer.newComment(comment);
             
-            // console.log(post);
-
             req.flash('success', 'Comment was Added!');
 
             if(req.xhr) {
