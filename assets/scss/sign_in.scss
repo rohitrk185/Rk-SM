@@ -1,0 +1,106 @@
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+#sign-in-form{
+    box-shadow: 0 0 .7em .1em rgb(33, 26, 78);
+    border-radius: .7em;
+    width: 40%;
+    height: 70%;
+    margin: 2.6% auto;
+
+    h1{
+        color: rgb(79, 33, 122);
+    }
+
+    #forgot-psswd-link{
+        font-style: normal;
+        font-size: small;
+        text-decoration: underline; 
+        color: #dc143c; 
+        font-style: oblique;
+        letter-spacing: .1px;
+    }
+
+    #forgot-psswd-link:hover {
+        text-decoration: underline;
+        color: rgb(236, 35, 76);
+        letter-spacing: .3px;
+        text-decoration-color: #c21235;
+        transition: all .2s;
+    }
+
+    :not(input[type=submit]){
+        margin: 4% 0 5% 0;
+        outline: none;
+        padding: .2em .4em;
+        width: 70%;
+        color: rgb(33, 26, 78);
+    }
+
+    input[type=submit]{
+        border: none;
+        background-color: darkslateblue;
+        color: aliceblue;
+        border-radius: 0.4em;
+        letter-spacing: .1em;
+        padding: .5em .7em;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: rgb(90, 75, 180);
+        color: rgb(255, 255, 255);
+    }
+
+    input[type=submit]:focus {
+        padding: .4em .6em;
+        transform: scale(0.95,0.95);
+    }
+    
+    .custom-input {
+        outline: none;
+        border: 1.9px solid rgb(75, 65, 140);
+        background-color: #ffe;
+        border-radius: 2em;
+        padding: 6em 3em;
+        font-size: .9em;
+        letter-spacing: 1px;
+    }
+
+    .custom-input:focus {
+        border-radius: .3em;
+        border-color: rgb(60, 35, 110);
+        background-color: #fff;
+    }   
+
+    input[type=password]:focus {
+        font-size: 1em;
+    }
+
+    #ggl-sign-in {
+        position: relative;
+        width: 50%;
+        border-radius: 0.2em;
+        background-color: antiquewhite;
+        overflow: visible;
+    }
+
+    #ggl-sign-in::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, #4285f4, #db4437, #f4b400, #0f9d58);
+        z-index: -1;
+        margin: -4px;
+        border-radius: .2em;
+    }
+}
+
+#sign-in-form:hover{
+    z-index: 999;
+    transform:translateZ(1000px);
+    transition: all 0.3s;
+}

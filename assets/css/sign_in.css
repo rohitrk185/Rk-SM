@@ -1,0 +1,79 @@
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+#sign-in-form {
+  box-shadow: 0 0 0.7em 0.1em #211a4e;
+  border-radius: .7em;
+  width: 40%;
+  height: 70%;
+  margin: 2.6% auto; }
+  #sign-in-form h1 {
+    color: #4f217a; }
+  #sign-in-form #forgot-psswd-link {
+    font-style: normal;
+    font-size: small;
+    text-decoration: underline;
+    color: #dc143c;
+    font-style: oblique;
+    letter-spacing: .1px; }
+  #sign-in-form #forgot-psswd-link:hover {
+    text-decoration: underline;
+    color: #ec234c;
+    letter-spacing: .3px;
+    text-decoration-color: #c21235;
+    transition: all .2s; }
+  #sign-in-form :not(input[type=submit]) {
+    margin: 4% 0 5% 0;
+    outline: none;
+    padding: .2em .4em;
+    width: 70%;
+    color: #211a4e; }
+  #sign-in-form input[type=submit] {
+    border: none;
+    background-color: darkslateblue;
+    color: aliceblue;
+    border-radius: 0.4em;
+    letter-spacing: .1em;
+    padding: .5em .7em;
+    cursor: pointer; }
+  #sign-in-form input[type=submit]:hover {
+    background-color: #5a4bb4;
+    color: white; }
+  #sign-in-form input[type=submit]:focus {
+    padding: .4em .6em;
+    transform: scale(0.95, 0.95); }
+  #sign-in-form .custom-input {
+    outline: none;
+    border: 1.9px solid #4b418c;
+    background-color: #ffe;
+    border-radius: 2em;
+    padding: 6em 3em;
+    font-size: .9em;
+    letter-spacing: 1px; }
+  #sign-in-form .custom-input:focus {
+    border-radius: .3em;
+    border-color: #3c236e;
+    background-color: #fff; }
+  #sign-in-form input[type=password]:focus {
+    font-size: 1em; }
+  #sign-in-form #ggl-sign-in {
+    position: relative;
+    width: 50%;
+    border-radius: 0.2em;
+    background-color: antiquewhite;
+    overflow: visible; }
+  #sign-in-form #ggl-sign-in::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #4285f4, #db4437, #f4b400, #0f9d58);
+    z-index: -1;
+    margin: -4px;
+    border-radius: .2em; }
+
+#sign-in-form:hover {
+  z-index: 999;
+  transform: translateZ(1000px);
+  transition: all 0.3s; }

@@ -1,4 +1,9 @@
 const User = require('../models/user');
+const Token = require('../models/access_token');
+const crypto = require('crypto');
+
+const resetTokenMailer = require('../mailers/resetToken_mailer');
+
 const fs = require('fs');
 const path = require('path');
 
@@ -46,7 +51,7 @@ module.exports.update = async (req, res) => {
 //render sign-up page
 module.exports.signUp = (req, res) => {
     if(req.isAuthenticated()) {
-        return res.redirect('/users/profile');
+        return res.redirect(`/users/profile/${req.user.id}`);
     }
     return res.render('user_sign_up', {
         title: 'Codeial | Sign Up'
@@ -57,7 +62,7 @@ module.exports.signUp = (req, res) => {
 //render sign-in page
 module.exports.signIn = (req, res) => {
     if(req.isAuthenticated()) {
-        return res.redirect('/users/profile');
+        return res.redirect(`/users/profile/${req.user.id}`);
     }
     return res.render('user_sign_in', {
         title: 'Codeial | Sign In'
@@ -100,5 +105,63 @@ module.exports.createSession = (req, res) => {
 module.exports.destroySession = (req, res) => {
     req.logout();
     req.flash('success', "Logged out Successfully");
-    return res.redirect('/');  
+    return res.redirect('/');
+};
+
+module.exports.createToken = async function(req, res){
+    try{
+        let user = await User.findOne({email: req.body.r_email});
+        // console.log(user);
+        let newToken = {
+            user: user._id,
+            token: Math.ceil(Math.random() * (999999-111111) + 111111),
+            isValid: true  
+        }
+        let token = await Token.create(newToken);
+        token = await Token.findOne({_id: token._id}).populate('user', 'email');
+        // console.log(token);
+        // resetTokenMailer.newResetToken(token);
+        return res.redirect(`/users/forgot_password/${token.id}`);
+    }catch(err){
+        console.log("Error: ", err); return;
+    }
+    
+};
+
+module.exports.checkToken = (req, res) => {
+    Token.findById(req.params.id, (err, token) => {
+        if(err) {
+            return res.redirect('/users/sign-in');
+        }
+        if(token.isValid) {
+            return res.render('reset_password',{
+                title: 'Codeial | Reset-Password',
+                token: token,
+                user: req.user
+            });
+        }
+        return res.redirect('/users/sign-in');
+    });
+};
+
+module.exports.resetPassword = async (req, res) => {
+    let token = await Token.findOne({token: req.body.token_id});
+    if(token) {
+        if(req.body.password != req.body.confirm_password) {
+            return res.redirect('back');
+        }
+        if(token.isValid) {
+            await User.findByIdAndUpdate(token.user, {
+                password: req.body.password
+            });
+            // console.log('changed');
+            await Token.findByIdAndUpdate(token._id, {isValid: false});
+
+            req.flash('success', "Successfully Reset Password!");
+            token = await Token.findOne({_id: token._id}).populate('user', 'name email');
+            // resetTokenMailer.passwordChanged(token.user);
+        }
+        return res.redirect('/users/sign-in');
+    }
+    return res.redirect('/users/sign-up');
 };

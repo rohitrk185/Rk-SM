@@ -1,14 +1,32 @@
-<h1>Sign in</h1>
+<link rel="stylesheet" href="/css/sign_in.css">
 
-<form action="/users/create-session" method="post">
+<div id="sign-in-form" class="flex">
+    <h1>Sign-in</h1>
 
-    <input type="email" name="email" id="email" placeholder="Your Email" required>
-    <input type="password" name="password" id="password" placeholder="Password" required>
+    <form action="/users/create-session" method="post" class="flex" id="form-sign-in">
+        <input type="email" name="email" id="email" placeholder="Email" required class="custom-input">
+        <input type="password" name="password" id="password" placeholder="Password" required class="custom-input">
+        <a id="forgot-psswd-link" href="/users/forgot_password">Forgot Password?</a>    
+        
+        <input type="submit" value="Sign In">
+    </form>
 
-    <input type="submit" value="Sign In">
+    <form action="/users/forgot_password" method="post" class="flex" id="form-reset-psswd">
+        <input type="email" name="r_email" id="r-email" placeholder="Email" required class="custom-input">
+        <input type="submit" value="Reset Password">
+    </form>
 
-</form>
+    <button id="ggl-sign-in">
+        <a href="/users/auth/google" target="_self">Sign In/Sign Up by Google</a>
+    </button>
+        
+</div>
 
-<p>
-    <a href="/users/auth/google" target="_self">Google Sign In/Sign Up</a>
-</p>
+<script>
+    $("#form-reset-psswd").hide();
+    $("#forgot-psswd-link").click(function(e){
+        e.preventDefault();
+        $("#form-sign-in").hide();
+        $("#form-reset-psswd").show();
+    });
+</script>
