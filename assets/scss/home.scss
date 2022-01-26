@@ -1,9 +1,13 @@
 #home-container {
     display: flex;
 
+    .hidden{
+        display: none;
+    }
+
     #feed-posts {
         width: 69%;
-        padding: 10px;
+        padding-bottom: 60px;
         border-right: 1.5px dashed #000;
     }
 
@@ -11,6 +15,12 @@
         width: 29%;
         padding: 10px;
         height: 100%;
+    }
+
+    .posts-container{
+        .comments-container{
+            margin-top: 10px;
+        }
     }
 
 }

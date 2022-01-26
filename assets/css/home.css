@@ -1,10 +1,14 @@
 #home-container {
   display: flex; }
+  #home-container .hidden {
+    display: none; }
   #home-container #feed-posts {
     width: 69%;
-    padding: 10px;
+    padding-bottom: 60px;
     border-right: 1.5px dashed #000; }
   #home-container #user-friends {
     width: 29%;
     padding: 10px;
     height: 100%; }
+  #home-container .posts-container .comments-container {
+    margin-top: 10px; }

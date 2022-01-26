@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-
+const Like = require('../models/like');
 
 module.exports.create = async function(req, res) {
     try {
@@ -40,6 +40,9 @@ module.exports.delete = async function(req, res) {
             console.log(`${post} --was deleted`);
 
             await Comment.deleteMany({post: req.params.id});
+            for(let p of post.likes){
+                await Like.findByIdAndDelete(p);
+            }
 
             req.flash('success', 'Post Deleted!');
 

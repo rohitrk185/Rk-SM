@@ -1,5 +1,21 @@
 {
     console.log('active-1');
+
+    let commBtns = ()=> {
+        let commentBtns = document.querySelectorAll(".comment-toggle-btn");
+        // document.
+        // console.log(commentBtns);
+        for(let i = 0; i < commentBtns.length; i++){
+            console.log(i);
+            commentBtns[i].addEventListener("click", (e)=>{
+                // console.log(commentBtns[i]);
+                // console.log(commentBtns[i].parentNode.children[2].nodeName);
+                commentBtns[i].parentNode.children[2].classList.contains("hidden") ? commentBtns[i].parentNode.children[2].classList.remove("hidden") : commentBtns[i].parentNode.children[2].classList.add("hidden"); 
+            })
+        }
+    };
+    commBtns();
+
     let showNoty = (flash) => {
         if(flash.success && flash.success.length > 0) {
           new Noty({
@@ -32,11 +48,14 @@
                 url: '/posts/create',
                 data: newPostForm.serialize(),
                 success: function(data) {
+                $('#new-post-form textarea').val('');
                     let newPost = newPostDom(data.data.post);
                     $('#posts-list-container > ul').prepend(newPost);
                     deletePost($(' .delete-post-btn', newPost));
                     createComment($(' .comment-form', newPost));
                     showNoty(data.flash);
+                    likePost($(' .like-post-btn', newPost));
+                    commBtns();
                 }, error: function(err) {
                     console.log(err.responseText);
                 }
@@ -49,15 +68,16 @@
         return $(`<li style="text-align: left;" id="post-${post[0]._id}">
         <p> 
           ${post[0].content}
-    
-          <small>
-            <a class="delete-post-btn" href="/posts/delete/${post[0]._id}">Delete</a>
-          </small>
-          
           <br>
           <small style="font-size: 0.7em; color:rgb(20, 20, 20)"> Posted By ${post[0].user.name} </small> 
         </p> 
         <div class="post-comments">
+            <small>
+                <a href="/likes/toggle/?id=${post[0]._id}&type=Post" class="like-post-btn">Like</a>
+                <a class="delete-post-btn" href="/posts/delete/${post[0]._id}">Delete</a>
+            </small>
+
+            <button type="button" class="comment-toggle-btn">Comments</button>
           <form action="/comments/create" method="POST" class="comment-form">
             <input type="text" name="content" placeholder="Type Here to add comment..." required>
             <input type="hidden" ,m name="post" value="${post[0]._id}">
@@ -160,5 +180,52 @@
         deleteComment(comment);
     }
 
-    console.log('done-1');
+    // console.log(commentBtns);
+    // const likeBtn = (btn) => {
+    //     btn.parentNode.children[2].classList.contains("hidden") ? btn.parentNode.children[2].classList.remove("hidden") : btn.parentNode.children[2].classList.add("hidden"); 
+    // }
+
+    
+    
+
+
+    let likePost = (btn) => {
+        $(btn).click((e) => {
+            e.preventDefault();
+            $.ajax({
+                type: 'get',
+                url:  $(btn).prop('href'),
+                success: (data) => {
+                    console.log(data.data);
+                    let count = parseInt($(btn).prev().text());
+                    console.log(count);
+                    if(data.data.deleted == true){
+                        $(btn).text("Like?")
+                        $(btn).css('color','grey');
+                        count--;
+                    }else{
+                        $(btn).text("Liked!")
+                        $(btn).css('color','green');
+                        count++;
+                    }
+                    count += count != 1 ? ' likes' : ' like'
+                    $(btn).prev().text(count);
+                    // window.alert(data.flash.success);
+                    // data.deleted ? $(btn).text("Like?") : $(btn).text("Liked!");
+                    showNoty(data.flash);
+                },
+                error: (err) => {
+                    console.log("Error while liking post: ", err.responseText);
+                    showNoty({'error': "Couldn't like Post!"});
+                }
+            });
+        })
+    };
+
+    let likePostBtns = $(' .like-post-btn');
+    for(likePostBtn of likePostBtns) {
+        likePost(likePostBtn);
+    }
+
+    console.log('done');
 }

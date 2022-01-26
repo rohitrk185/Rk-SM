@@ -14,22 +14,45 @@ module.exports.home = async function(req, res) {
                 path: 'user',
                 select: 'name'
             }
-        });
+        })
+        .populate({
+            path: 'likes',
+            select: 'user',
+            populate: {
+                path: 'user',
+                select: 'name',
+                // match: {_id: req.user._id}
+            }
+        })
+        .lean();
 
-        // console.log(posts[0].comments[0]);
+        if(req.user) {
+            // console.log('inside');
+            for(let p of posts) {
+                p.isLiked = false;
+                for(let l of p.likes) {
+                    if(req.user.id == l.user._id) {
+                        p.isLiked = true;
+                        break;
+                    }
+                }
+            }
+        }
 
-        let users = await User.find({}, {
-            password: 0,
-            email: 0,
-            createdAt: 0,
-            updatedAt: 0,
-        });
+        console.log(posts);
+        // console.log(liked);
+        // for(let p of posts){
+        //     console.log(p.likes);
+        // }
+
+        let users = await User.find({}, 'name _id');
 
         req.flash('sucess', "Welcome:)");
         return res.render('home', {
             title: 'SM-Home',
             posts: posts,
-            allUsers: users
+            allUsers: users,
+            // liked: liked
         });
     } catch(err) {
         console.log('Error: ', err);

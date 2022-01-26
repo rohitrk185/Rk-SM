@@ -15,7 +15,7 @@
         color: rgb(79, 33, 122);
     }
 
-    #forgot-psswd-link{
+    .links{
         font-style: normal;
         font-size: small;
         text-decoration: underline; 
@@ -24,7 +24,7 @@
         letter-spacing: .1px;
     }
 
-    #forgot-psswd-link:hover {
+    .links:hover {
         text-decoration: underline;
         color: rgb(236, 35, 76);
         letter-spacing: .3px;
@@ -38,6 +38,10 @@
         padding: .2em .4em;
         width: 70%;
         color: rgb(33, 26, 78);
+    }
+
+    #sign-in-link {
+        margin-top: 30px;
     }
 
     input[type=submit]{

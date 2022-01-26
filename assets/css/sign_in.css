@@ -11,14 +11,14 @@
   margin: 2.6% auto; }
   #sign-in-form h1 {
     color: #4f217a; }
-  #sign-in-form #forgot-psswd-link {
+  #sign-in-form .links {
     font-style: normal;
     font-size: small;
     text-decoration: underline;
     color: #dc143c;
     font-style: oblique;
     letter-spacing: .1px; }
-  #sign-in-form #forgot-psswd-link:hover {
+  #sign-in-form .links:hover {
     text-decoration: underline;
     color: #ec234c;
     letter-spacing: .3px;
@@ -30,6 +30,8 @@
     padding: .2em .4em;
     width: 70%;
     color: #211a4e; }
+  #sign-in-form #sign-in-link {
+    margin-top: 30px; }
   #sign-in-form input[type=submit] {
     border: none;
     background-color: darkslateblue;

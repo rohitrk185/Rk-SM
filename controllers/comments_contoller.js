@@ -1,5 +1,6 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
+const Like = require('../models/like');
 
 const commentsMailer = require('../mailers/comments_mailer');
 const queue = require('../config/kue');
@@ -12,7 +13,7 @@ module.exports.create = async function(req, res) {
             let comment = await Comment.create({
                 content: req.body.content,
                 post: req.body.post,
-                user: req.user._id,
+                user: req.user.id,
                 postOwnedUser: post.user
             });
             post.comments.push(comment);
@@ -59,6 +60,13 @@ module.exports.delete = async function(req,res) {
 
             let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
             
+            // for(let p of post.likes){
+            //     await Like.findByIdAndDelete(p);
+            // }
+            for(let c of comment.likes){
+                await Like.findByIdAndDelete(c);
+            }
+
             req.flash('success', 'Comment was Deleted!');
 
             if(req.xhr) {

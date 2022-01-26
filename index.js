@@ -36,7 +36,8 @@ app.use(sassMiddleware({
 
 
 //Use urlEncoded
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 //use cookieParser
 app.use(cookieParser());
 
