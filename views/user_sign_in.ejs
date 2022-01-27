@@ -26,13 +26,14 @@
 <script src="/js/jquery-3.6.0.js"></script>
 <script>
     $("#form-reset-psswd").hide();
-    $("sign-in-link").hide();
+    $("#sign-in-link").hide();
     $("#forgot-psswd-link").click(function(e){
         e.preventDefault();
         $("#form-sign-in").hide();
+        $("#ggl-sign-in").hide();
+        $("#forgot-psswd-link").hide();
         $("#form-reset-psswd").show();
         $("#sign-in-link").show();
-        $("#ggl-sign-in").hide();
     });
     $("#sign-in-link").click(function(e){
         e.preventDefault();
@@ -40,5 +41,6 @@
         $("#form-sign-in").show();
         $("#form-reset-psswd").hide();
         $("#sign-in-link").hide();
+        $("#forgot-psswd-link").show();
     });
 </script>

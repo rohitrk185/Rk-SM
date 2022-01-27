@@ -2,7 +2,7 @@
 
 <img src="<%= user.avatar %>" alt="user-avatar" width="100" height="100">        
 
-<% if(user.id == profile_user.id) { %>
+<% if(locals.user.id == locals.profile_user.id) { %>
     <form action="/users/update/<%= profile_user.id %>" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
         <input type="email" name="email" placeholder="Your E-Mail" value="<%= profile_user.email %>" required>
@@ -12,6 +12,61 @@
         <input type="submit" value="Update">
     </form>
 <% } else {%>
-    <p> <%= profile_user.name%> </p>
-    <p> <%= profile_user.email%> </p>
+    <p> <%= locals.profile_user.name%> </p>
+    <p> <%= locals.profile_user.email%> </p>
+    <% if(locals.user) { %>
+        <a id="add-friend-btn" href="/friends/toggleFriend/?id=<%=locals.profile_user._id%>"> 
+            Add Friend    
+        </a>
+    <% } %>
 <% } %>
+
+<script src="/js/jquery-3.6.0.js"></script>
+<script>
+    let showNoty = (flash) => {
+        if(flash.success && flash.success.length > 0) {
+            new Noty({
+                theme: 'sunset',
+                text: flash.success,
+                type: 'success',
+                layout: 'topRight',
+                timeout: 1500,
+            }).show();
+        }
+        if(flash.error && flash.error.length > 0) {
+            new Noty({
+                theme: 'mint',
+                text: '<%= flash.error %>',
+                type: 'error',
+                layout: 'topRight',
+                timeout: 1500,
+            }).show();
+        }
+    };
+
+
+    $("#add-friend-btn").click((e) => {
+        e.preventDefault();
+        $.ajax({
+            type: 'get',
+            url: $("#add-friend-btn").prop('href'),
+            success: (data) => {
+                console.log(data)
+                if(data.data.deleted){
+                    $("#add-friend-btn").text("Add Friend");
+                    $("#add-friend-btn").css('backgroundColor', '#0f0');
+                    $("#add-friend-btn").css('color', '#fff');
+                }else{
+                    $("#add-friend-btn").text("Remove Friend");
+                    $("#add-friend-btn").css('backgroundColor', '#f00');
+                    $("#add-friend-btn").css('color', '#fff');
+                }
+                showNoty(data.flash);
+            }, error: (err) => {
+                console.log(err.responseText);
+                showNoty( {error: "Try Again!"} );
+            }
+        });
+    });
+
+</script>

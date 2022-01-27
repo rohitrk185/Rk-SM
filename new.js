@@ -1,33 +1,16 @@
 {
     console.log('active-1');
 
-    let clickCommBtn = (commBtn) => {
-        $(commBtn).click((e)=>{
-            console.log('click')
-            // console.log(commentBtns[i]);
-            // console.log(commentBtns[i].parentNode.children[2].nodeName);
-            // commBtn.parentNode.parentNode.children[1].classList.contains("hidden") ? commBtn.parentNode.parentNode.children[1].classList.remove("hidden") : commBtn.parentNode.parentNode.children[1].classList.add("hidden");
-            $(commBtn).parent().parent().children(".comments-container").hasClass("hidden") ? $(commBtn).parent().parent().children(".comments-container").removeClass("hidden") : $(commBtn).parent().parent().children(".comments-container").addClass("hidden"); 
-        })
-    };
-
     let commBtns = ()=> {
-        let commentBtns = $(" .comment-toggle-btn");
-        for(let btn of commentBtns) {
-            clickCommBtn(btn);
-        }   
-        // document.
-        // console.log(commentBtns);
-        // for(let i = 0; i < commentBtns.length; i++){
-            // console.log(i);
-            // clickCommBtn(commentBtns[i]);
-            // commentBtns[i].addEventListener("click", (e)=>{
-            //     console.log('click')
-            //     // console.log(commentBtns[i]);
-            //     // console.log(commentBtns[i].parentNode.children[2].nodeName);
-            //     commentBtns[i].parentNode.parentNode.children[1].classList.contains("hidden") ? commentBtns[i].parentNode.parentNode.children[1].classList.remove("hidden") : commentBtns[i].parentNode.parentNode.children[1].classList.add("hidden"); 
-            // })
-        // }
+        let commentBtns = document.querySelectorAll(".comment-toggle-btn");
+        for(let i = 0; i < commentBtns.length; i++){
+            console.log(i);
+            commentBtns[i].addEventListener("click", (e)=>{
+                // console.log(commentBtns[i]);
+                // console.log(commentBtns[i].parentNode.children[2].nodeName);
+                commentBtns[i].parentNode.parentNode.children[1].classList.contains("hidden") ? commentBtns[i].parentNode.parentNode.children[1].classList.remove("hidden") : commentBtns[i].parentNode.parentNode.children[1].classList.add("hidden"); 
+            })
+        }
     };
     commBtns();
 
@@ -49,7 +32,7 @@
               layout: 'topRight',
               timeout: 1500,
           }).show();
-      }
+        }
     };
 
 
@@ -70,8 +53,7 @@
                     createComment($(' .comment-form', newPost));
                     showNoty(data.flash);
                     likePost($(' .like-post-btn', newPost));
-                    // commBtns();
-                    clickCommBtn($(" .comment-toggle-btn", newPost));
+                    commBtns();
                 }, error: function(err) {
                     console.log(err.responseText);
                 }
@@ -90,24 +72,24 @@
         <div class="post-comments">
             <small class="post-options">
                 <span class="likes-count" style="display: block;">0 likes</span>
-                <a href="/likes/toggle/?id=${post[0]._id}&type=Post" class="like-post-btn" style="color: rgb(114, 114, 114)">Like</a>
+                <a href="/likes/toggle/?id=${post[0]._id}&type=Post" class="like-post-btn" style="color: rgb(114, 114, 114)">Like?</a>
                 <a class="delete-post-btn" href="/posts/delete/${post[0]._id}">Delete</a>
                 <button type="button" class="comment-toggle-btn">Comments</button>
             </small>
+
             <div class="comments-container hidden">
                 <form action="/comments/create" method="POST" class="comment-form">
                     <input type="text" name="content" placeholder="Type Here to add comment..." required>
-                    <input type="hidden" ,m name="post" value="${post[0]._id}">
+                    <input type="hidden" name="post" value="${ post[0]._id}">
                     <input type="submit" value="Add Comment">
                 </form>
-    
+        
                 <div class="post-comments-list">
-                    <ul id="post-comments-${post[0]._id}">
-              
-                    </ul>
+                    <ul id="post-comments-${post[0]._id}"></ul>
                 </div>
             </div>
-        </li>`);
+        </div>
+      </li>`);
     }
 
     let deletePost = (deleteLink) => {
@@ -143,15 +125,15 @@
     }
 
 	//method to create comment by ajax
+    let createComment = (cForm) => {
     //   let commentForms = $('.comment-form');
     //   for(cForm of commentForms) {
-    let createComment = (cForm) => {
-        $(cForm).submit((e) => {
+        cForm.submit((e) => {
             e.preventDefault();
             $.ajax({
                 type: 'post',
                 url: '/comments/create',
-                data: $(cForm).serialize(),
+                data: cForm.serialize(),
                 success: (data) => {
                     let newComment = newCommentDom(data.data.comment);
                     $(`#post-comments-${data.data.postId}`).prepend(newComment);
@@ -183,25 +165,19 @@
 	// createComment();
 
     let posts = $(' .delete-post-btn');
-    for(let post of posts) {
+    for(post of posts) {
         deletePost(post);
     }
 
-    let cForms = $('.comment-form');
+    let cForms = $(' .comment-form');
     for(cForm of cForms) {
-        console.log(cForm);
         createComment(cForm);
     }
 
     let comments = $(' .comment-del-btn');
-    for(let comment of comments) {
+    for(comment of comments) {
         deleteComment(comment);
     }
-
-    // console.log(commentBtns);
-    // const likeBtn = (btn) => {
-    //     btn.parentNode.children[2].classList.contains("hidden") ? btn.parentNode.children[2].classList.remove("hidden") : btn.parentNode.children[2].classList.add("hidden"); 
-    // }
 
     
     

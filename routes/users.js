@@ -27,5 +27,7 @@ router.get('/auth/google/callback', passport.authenticate('google', {failureRedi
 
 router.post('/forgot_password', usersController.createToken);
 router.get('/forgot_password/:id', usersController.checkToken);
-module.exports = router;
 router.post('/reset_password', usersController.resetPassword);
+
+
+module.exports = router;

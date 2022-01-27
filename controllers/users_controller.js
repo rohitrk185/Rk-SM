@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Friend = require('../models/friend');
 const Token = require('../models/access_token');
 const crypto = require('crypto');
 
@@ -7,13 +8,19 @@ const resetTokenMailer = require('../mailers/resetToken_mailer');
 const fs = require('fs');
 const path = require('path');
 
-module.exports.profile = (req, res) => {
+module.exports.profile = async (req, res) => {
     // res.end('<h1>Welcome to user Profile</h1>');
-    User.findById(req.params.id, (err, user)=> {
-        res.render('profile', {
-            title: 'Profile',
-            profile_user: user
-        });
+    let profile_user;
+    if(req.user) {
+        profile_user = await User.findById(req.params.id).populate( {path: 'friends' } );
+    }else {
+        profile_user = await User.findById(req.params.id);
+    }
+    console.log(profile_user);
+    
+    res.render('profile', {
+        title: 'Profile',
+        profile_user: profile_user
     });
 };
 

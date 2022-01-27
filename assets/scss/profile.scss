@@ -11,3 +11,29 @@ p{
         size: 20px;
     };
 }
+
+a{
+    text-decoration: none;
+}
+
+#add-friend-btn {
+    color: #000;
+    border: 2px solid cornflowerblue;
+    border-radius: .6em;
+    font-size: .8em;
+    padding: .4em .6em;
+}
+
+#add-friend-btn:hover {
+    background-color: #a256ff;
+    // border-color: #000;
+    border-radius: .9em;
+    color: #eee;
+    transition: all .3s;
+}
+
+#add-friend-btn:active {
+    color: #fff;
+    border-radius: .2em;
+    font-size: .75em;
+}

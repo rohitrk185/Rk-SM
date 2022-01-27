@@ -19,7 +19,10 @@ module.exports.create = async function(req, res) {
             post.comments.push(comment);
             post.save();
 
-            comment = await comment.populate('user', 'name email'); 
+            comment = await comment.populate({
+                path: 'user',
+                select: {'name' : 1, '_id': 1}
+            });
 
             // commentsMailer.newComment(comment);
             // let job = queue.create('emails', comment).save(err => {
@@ -30,6 +33,7 @@ module.exports.create = async function(req, res) {
             req.flash('success', 'Comment was Added!');
 
             if(req.xhr) {
+                console.log(comment);
                 return res.status(200).json({
                     data: {
                         comment: comment,
