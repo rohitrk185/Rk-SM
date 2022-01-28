@@ -6,6 +6,7 @@ header, footer{
     background-color: rgb(49, 22, 75);
     padding: 0px 8px;
     font-size: 0.9em;
+    user-select: none;
 
     h2{
         font-size: 1.6em;
@@ -30,7 +31,7 @@ header, footer{
         border-left: 1px solid rgb(235, 215, 255);
         padding: 0 2px;
     }
-    ul li a:hover{
+    .hover:hover{
         color: #fff;
         text-decoration: underline;
         border-left: 1px solid #fff;

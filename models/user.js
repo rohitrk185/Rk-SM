@@ -22,10 +22,10 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     friends: [
-      {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Friend'
-      }  
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }  
     ]
 }, {
     timestamps: true

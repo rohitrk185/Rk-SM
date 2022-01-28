@@ -12,5 +12,19 @@
         <small>
         -<%= comment.user.name %>
         </small>
+
+        <br>
+        <small>
+            <span> <%=comment.likes.length%> like<%if(comment.likes.length!=1){%>s<%}%> </span>
+            <% if(locals.user) { %>
+                <span>
+                    <% if(locals.user && comment.isLiked) { %>
+                        <a href="/likes/toggle/?id=<%=comment._id%>&type=Comment" class="like-btn like-comment-btn" style="color: rgb(0, 182, 0)">Liked!</a>
+                    <% } else {%>
+                        <a href="/likes/toggle/?id=<%=comment._id%>&type=Comment" class="like-btn like-comment-btn" style="color: rgb(114, 114, 114)">Like?</a>
+                    <% } %>
+                </span>
+            <% } %>
+        </small>
     </p>
 </li>

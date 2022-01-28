@@ -12,11 +12,16 @@ module.exports.profile = async (req, res) => {
     // res.end('<h1>Welcome to user Profile</h1>');
     let profile_user;
     if(req.user) {
-        profile_user = await User.findById(req.params.id).populate( {path: 'friends' } );
+        profile_user = await User.findById(req.params.id)
+        .populate({
+            path: 'friends', 
+            match: {_id: req.user._id}, 
+            select: 'name '
+        });
     }else {
         profile_user = await User.findById(req.params.id);
     }
-    console.log(profile_user);
+    // console.log(profile_user, profile_user.friends);
     
     res.render('profile', {
         title: 'Profile',

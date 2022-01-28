@@ -15,14 +15,19 @@
     <p> <%= locals.profile_user.name%> </p>
     <p> <%= locals.profile_user.email%> </p>
     <% if(locals.user) { %>
-        <a id="add-friend-btn" href="/friends/toggleFriend/?id=<%=locals.profile_user._id%>"> 
-            Add Friend    
-        </a>
+        <% if(locals.profile_user.friends[0] && (locals.user.id == locals.profile_user.friends[0]._id)) {%>
+            <a id="add-friend-btn" href="/friends/toggleFriend/?id=<%=locals.profile_user._id%>"> Remove Friend </a>
+        <% } else {%>
+            <a id="add-friend-btn" href="/friends/toggleFriend/?id=<%=locals.profile_user._id%>"> Add Friend </a>
+        <% } %>
     <% } %>
 <% } %>
 
 <script src="/js/jquery-3.6.0.js"></script>
 <script>
+    $("#profile-link a").removeAttr('href');
+    $("#profile-link a").removeClass('hover');
+
     let showNoty = (flash) => {
         if(flash.success && flash.success.length > 0) {
             new Noty({
@@ -54,12 +59,12 @@
                 console.log(data)
                 if(data.data.deleted){
                     $("#add-friend-btn").text("Add Friend");
-                    $("#add-friend-btn").css('backgroundColor', '#0f0');
-                    $("#add-friend-btn").css('color', '#fff');
+                    // $("#add-friend-btn").css('backgroundColor', '#0f0');
+                    // $("#add-friend-btn").css('color', '#fff');
                 }else{
                     $("#add-friend-btn").text("Remove Friend");
-                    $("#add-friend-btn").css('backgroundColor', '#f00');
-                    $("#add-friend-btn").css('color', '#fff');
+                    // $("#add-friend-btn").css('backgroundColor', '#f00');
+                    // $("#add-friend-btn").css('color', '#fff');
                 }
                 showNoty(data.flash);
             }, error: (err) => {

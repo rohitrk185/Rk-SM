@@ -2,11 +2,11 @@
     <h3>Page Footer</h3>
     <ul>
         <% if(locals.user) { %>
-            <li>
-                <a href="/"> Home </a> 
+            <li id="home-link">
+                <a href="/" class="hover"> Home </a> 
             </li>
-            <li>
-                <a href="/users/profile/<%= user.id %>"> Profile </a>
+            <li id="profile-link">
+                <a href="/users/profile/<%= user.id %>" class="hover"> Profile </a>
             </li>
         <% } %>
     </ul>

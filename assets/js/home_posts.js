@@ -1,5 +1,10 @@
 {
     console.log('active-1');
+    // <li id="home-link">
+    //     <a href="/"> Home </a> 
+    // </li>
+    $("#home-link a").removeAttr('href');
+    $("#home-link a").removeClass('hover');
 
     let clickCommBtn = (commBtn) => {
         $(commBtn).click((e)=>{
@@ -243,6 +248,46 @@
     let likePostBtns = $(' .like-post-btn');
     for(likePostBtn of likePostBtns) {
         likePost(likePostBtn);
+    }
+
+    let likeComment = (btn) => {
+        $(btn).click((e) => {
+            e.preventDefault();
+            $.ajax({
+                type: 'get',
+                url:  $(btn).prop('href'),
+                success: (data) => {
+                    console.log(data.data);
+                    let count = parseInt($(btn).parent().prev().text());
+                    console.log($(btn).parent().prev().text());
+                    console.log(count);
+                    if(data.data.deleted == true){
+                        $(btn).text("Like?")
+                        $(btn).css('color','grey');
+                        count--;
+                    }else{
+                        $(btn).text("Liked!")
+                        $(btn).css('color','green');
+                        count++;
+                    }
+                    if(count < 0) {
+                        count = 0;
+                    }
+                    count += count != 1 ? ' likes' : ' like';
+                    $(btn).parent().prev().text(count);
+                    showNoty(data.flash);
+                },
+                error: (err) => {
+                    console.log("Error while liking Comment: ", err.responseText);
+                    showNoty({'error': "Couldn't like Comment!"});
+                }
+            });
+        })
+    };
+
+    let likeCommBtns = $(' .like-comment-btn');
+    for(likeCommBtn of likeCommBtns){
+        likeComment(likeCommBtn);
     }
 
     console.log('done');

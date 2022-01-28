@@ -22,18 +22,31 @@
     </div>
   </section>
   
-  <section id="user-friends">
-    <% if(locals.user) { %>
-      <h4> Friends </h4>
-    <% }else { %>
-      <h4> Users </h4>
-    <% } %>
-      <% for(user of allUsers) { %>
-      <p>
-        <a href="/users/profile/<%= user.id%>"><%= user.name %></a>
-      </p>
-    <% } %>
-  </section>
+
+  	<% if(locals.user) { %>
+		<section id="user-friends">
+			<div class="friends">
+				<h4> Friends </h4>
+					<% if(loggedUser.friends.length > 0)  { %>	
+						<% for(friend of loggedUser.friends) { %>
+							<p>
+								<a href="/users/profile/<%=friend._id%>"> <%=friend.name%></a>
+							</p>
+						<% } %>
+					<% } else { %>
+						<!-- to right, #28c0c0 10%, #5a8f8f 30%,  #1d0041 80% -->
+						<p style="background: linear-gradient(to right, #28c0c0 10%, #5a8f8f 30%,  #1d0041 60%);background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">No friends found in your Friends-list</p>
+					<% } %>
+					<div class="users">
+						<h4> Users </h4>
+						<% for(let u of users) { %>
+							<p>
+								<a href="/users/profile/<%=u._id%>"> <%=u.name%></a>
+							</p>
+						<% } %>
+					</div>
+		</section>
+	<% } %>
 </div>
 
 <script src="./js/jquery-3.6.0.js"></script>

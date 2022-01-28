@@ -5,7 +5,8 @@ header, footer {
   align-items: center;
   background-color: #31164b;
   padding: 0px 8px;
-  font-size: 0.9em; }
+  font-size: 0.9em;
+  user-select: none; }
   header h2, footer h2 {
     font-size: 1.6em; }
   header *, footer * {
@@ -23,7 +24,7 @@ header, footer {
   header ul li a, footer ul li a {
     border-left: 1px solid #ebd7ff;
     padding: 0 2px; }
-  header ul li a:hover, footer ul li a:hover {
+  header .hover:hover, footer .hover:hover {
     color: #fff;
     text-decoration: underline;
     border-left: 1px solid #fff; }

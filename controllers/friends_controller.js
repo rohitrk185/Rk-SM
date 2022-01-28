@@ -35,10 +35,12 @@ module.exports.toggleFriend = async (req, res) => {
                     user: req.user.id,
                     friend: req.query.id
                 });
-                user.friends.push(friend);
-                friend.friends.push(user);
+                user.friends.push(friend._id);
+                friend.friends.push(user._id);
                 user.save();
                 friend.save();
+                console.log(friendship);
+                console.log(user, friend);
                 flash.success = `${friend.name} is your friend now!`;
             }
             console.log("Friend action complete");

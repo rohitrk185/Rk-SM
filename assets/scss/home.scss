@@ -7,20 +7,26 @@
 
     #feed-posts {
         width: 69%;
+        margin: .1em auto;
         padding-bottom: 60px;
-        border-right: 1.5px dashed #000;
     }
 
     #user-friends {
-        width: 29%;
-        padding: 10px;
+        width: 25%;
+        margin: 0.5em auto;
         height: 100%;
+        border-left: 1.5px dashed #000;
+    }
+
+    #user-friends p{
+        display: flex;
+        justify-content: center;
     }
 
     .posts-container{
+        
         .comments-container{
             margin-top: 10px;
         }
     }
-
 }
